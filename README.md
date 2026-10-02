@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1 align="center">cursor-clijev-compaction ⚡</h1>
+<h1 align="center">recompact ⚡</h1>
 
 <p align="center">
   <strong>TypeSafe Jev-scored context recovery for Cursor CLI (<code>agent</code>). Verbatim facts, zero user hook mutations.</strong>
@@ -41,7 +41,7 @@ Zero modifications to <code>~/.cursor/hooks.json</code>. Pure opt-in via <code>a
 
 ## Architecture
 
-Cursor's `preCompact` hook is purely observational (`user_message` only) and cannot replace or suppress native compact. `cursor-clijev-compaction` bridges this limitation by capturing tool I/O, scoring state with TypeSafe Jev, and re-injecting kept facts into the next turn.
+Cursor's `preCompact` hook is purely observational (`user_message` only) and cannot replace or suppress native compact. `recompact` bridges this limitation by capturing tool I/O, scoring state with TypeSafe Jev, and re-injecting kept facts into the next turn.
 
 ```mermaid
 flowchart LR
@@ -93,8 +93,8 @@ flowchart TD
 ### 1. Setup
 
 ```bash
-git clone https://github.com/kleosr/cursor-clijev-compaction.git
-cd cursor-clijev-compaction
+git clone https://github.com/kleosr/recompact.git
+cd recompact
 pnpm install
 pnpm build
 export TYPESAFE_API_KEY=your_typesafe_key
@@ -123,7 +123,7 @@ Alternatively, invoke Cursor's native `agent` CLI directly by passing the plugin
 
 ```bash
 export TYPESAFE_API_KEY=your_typesafe_key
-agent --plugin-dir /path/to/cursor-clijev-compaction
+agent --plugin-dir /path/to/recompact
 ```
 
 ### 3. Offline Compactor
@@ -141,7 +141,7 @@ Needs `TYPESAFE_API_KEY`. Prints JSON (messages, decisions, stats). Does not cal
 The core engine is self-contained and exported as an ESM package:
 
 ```ts
-import { compact, compactMessages, type Message } from 'cursor-clijev-compaction';
+import { compact, compactMessages, type Message } from 'recompact';
 
 const transcript: Message[] = [
   { role: 'user', text: 'Fix the failing test. Never touch src/auth.ts', toolUses: [] },
